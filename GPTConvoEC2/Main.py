@@ -78,3 +78,7 @@ with ThreadPoolExecutor(max_workers=2) as executor:
     executor.submit(process_scripts, queue)
 
 
+while threading.active_count() > 1:
+    time.sleep(1)
+
+

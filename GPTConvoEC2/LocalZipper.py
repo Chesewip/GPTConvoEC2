@@ -46,14 +46,17 @@ class LocalFileZipper:
 
         print(f'Files from {localDir} and script.txt have been zipped and saved to {zip_file_path}')
 
-        # delete all files and directories except for .gitkeep
-        for dirpath, dirnames, filenames in self._local_walk(localDir):
-            for filename in filenames:
-                if filename != ".gitkeep":
-                    os.remove(os.path.join(dirpath, filename))
-            for dirname in dirnames:
-                os.rmdir(os.path.join(dirpath, dirname))
+        try:
+            # delete all files and directories except for .gitkeep
+            for dirpath, dirnames, filenames in self._local_walk(localDir):
+                for filename in filenames:
+                    if filename != ".gitkeep":
+                        os.remove(os.path.join(dirpath, filename))
+                for dirname in dirnames:
+                    os.rmdir(os.path.join(dirpath, dirname))
 
-        print(f'Files and directories in {localDir}, except for .gitkeep, have been deleted.')
+                print(f'Files and directories in {localDir}, except for .gitkeep, have been deleted.')
+        except Exception as e:
+            print(f"Error deleting files or directories: {e}")
 
 
