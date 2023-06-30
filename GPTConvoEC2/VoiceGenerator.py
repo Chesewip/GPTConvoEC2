@@ -4,13 +4,21 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 import concurrent.futures
 from typing import List
+import time
 
 
 class VoiceGenerator:
 
-    def __init__(self, url):
-        self.client = Client(url)
-        self.url = url
+    def __init__(self, port):
+
+        self.url = "http://127.0.0.1:" + str(port)
+
+        try:
+            self.client = Client(self.url)
+        except:
+            self.launchNewVoiceCloner(port)
+            self.client = Client(self.url)
+
         self.input_prompt = ""
         self.line_delimiter = "\\n"
         self.emotion = None
@@ -77,6 +85,15 @@ class VoiceGenerator:
             print("File Generated")
         except:
             print("File Generated, return failed though?")
+
+
+    def launchNewVoiceCloner(self, port):
+        #self.ssh.exec_command("pkill -f -u ubuntu python")
+
+        command = f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port} & echo $! && exit'
+        stdin, stdout, stderr = self.ssh.exec_command(command)
+
+        time.sleep(60)
 
 
 import threading

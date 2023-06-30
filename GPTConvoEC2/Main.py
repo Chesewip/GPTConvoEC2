@@ -32,8 +32,8 @@ gptConvo = GPTConvo(get_api_key())
 localZipper.deleteResults();
 
 voiceGens = [
-    VoiceGenerator("http://127.0.0.1:8000"),
-    VoiceGenerator("http://127.0.0.1:8001")
+    VoiceGenerator(8000),
+    VoiceGenerator(8001)
     # Add more voice generators if needed
 ]
 
