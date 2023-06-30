@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import concurrent.futures
 from typing import List
 import time
+import subprocess
 
 
 class VoiceGenerator:
@@ -88,11 +89,10 @@ class VoiceGenerator:
 
 
     def launchNewVoiceCloner(self, port):
-        #self.ssh.exec_command("pkill -f -u ubuntu python")
-
-        command = f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port} & echo $! && exit'
-        stdin, stdout, stderr = self.ssh.exec_command(command)
-
+        command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
+        process = subprocess.Popen(command)
+    
+        # Give the process some time to start
         time.sleep(60)
 
 
