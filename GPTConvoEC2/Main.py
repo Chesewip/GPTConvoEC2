@@ -29,7 +29,7 @@ def get_api_key():
 
 
 gptConvo = GPTConvo(get_api_key())
-
+localZipper.deleteResults();
 
 voiceGens = [
     VoiceGenerator("http://127.0.0.1:8000"),

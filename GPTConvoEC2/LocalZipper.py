@@ -47,6 +47,10 @@ class LocalFileZipper:
 
         print(f'Files from {localDir} and script.txt have been zipped and saved to {zip_file_path}')
 
+        self.deleteResults()
+
+
+    def deleteResults(self, localDir = '/home/ubuntu/ai-voice-cloning/results/'):
         try:
             # delete all files and directories except for .gitkeep
             for dirpath, dirnames, filenames in self._local_walk(localDir):
@@ -59,5 +63,4 @@ class LocalFileZipper:
                 print(f'Files and directories in {localDir}, except for .gitkeep, have been deleted.')
         except Exception as e:
             print(f"Error deleting files or directories: {e}")
-
 
