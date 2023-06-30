@@ -50,7 +50,7 @@ class LocalFileZipper:
         self.deleteResults()
 
 
-    def deleteResults(self, localDir = '/home/ubuntu/ai-voice-cloning/results/'):
+    def deleteResults(self, localDir='/home/ubuntu/gptconvo/ai-voice-cloning/results/'):
         try:
             # delete all files and directories except for .gitkeep
             for dirpath, dirnames, filenames in self._local_walk(localDir):
