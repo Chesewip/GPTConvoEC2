@@ -1,5 +1,6 @@
 import os
 import zipfile
+import shutil
 from datetime import datetime
 from collections import defaultdict
 
@@ -53,7 +54,7 @@ class LocalFileZipper:
                     if filename != ".gitkeep":
                         os.remove(os.path.join(dirpath, filename))
                 for dirname in dirnames:
-                    os.rmdir(os.path.join(dirpath, dirname))
+                    shutil.rmtree(os.path.join(dirpath, dirname))
 
                 print(f'Files and directories in {localDir}, except for .gitkeep, have been deleted.')
         except Exception as e:
