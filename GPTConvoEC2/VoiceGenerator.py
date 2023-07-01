@@ -98,7 +98,7 @@ class VoiceGenerator:
         process = subprocess.Popen(command)
     
         # Give the process some time to start
-        time.sleep(30)
+        time.sleep(50)
 
 
 import threading
