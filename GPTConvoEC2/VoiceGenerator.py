@@ -20,6 +20,7 @@ class VoiceGenerator:
             self.launchNewVoiceCloner(port)
             self.client = Client(self.url)
 
+        self.port = port
         self.input_prompt = ""
         self.line_delimiter = "\\n"
         self.emotion = None
@@ -56,6 +57,9 @@ class VoiceGenerator:
         else:
             self.seed = None;
 
+        if text == "":
+            return
+
         try:
             result = self.client.predict(
             text,
@@ -89,11 +93,12 @@ class VoiceGenerator:
 
 
     def launchNewVoiceCloner(self, port):
+        print("Starting New Voice Cloner")
         command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
         process = subprocess.Popen(command)
     
         # Give the process some time to start
-        time.sleep(60)
+        time.sleep(30)
 
 
 import threading
