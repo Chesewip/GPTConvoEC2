@@ -52,6 +52,10 @@ class VoiceGenerator:
 
     def generateLine(self, text, voice):
 
+        #testing
+        response = self.client.get(self.url)
+        print(response)
+
         if voice == "Gabbi":
             self.seed = 1;
         else:

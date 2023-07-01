@@ -142,7 +142,9 @@ class ScriptObjects:
         "The characters hold an intervention for one of the other characters",
         "{name1} says they are going to rehab",
         "{name1} says they haven't slept in 6 days",
-        "{name1} starts taking steroids"
+        "{name1} starts taking steroids",
+        "{name1} immediately tells the most innapropriate secret",
+        "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"
     ]
 
     funny_topics_two = [
@@ -154,8 +156,8 @@ class ScriptObjects:
 
     characters = [
         ("Shawn", "A character always has R rated replies"),
-        ("Gilbert", "An character who always has creepy replies and every other character hates"),
-        ("Gabbi", "A female character whos a terrible person"),
+        ("Gilbert", "A creepy character that every other character hates"),
+        ("Gabbi", "A terrible person female character"),
         ("Mitch", "A character from the suburbs who tries to be a gangsta and always talks in slang"),
         ("Xage", "A knowledgable person who speaks like a caveman"),
         ("Fuzz" , "A mentally handicapped crazy character")
@@ -184,10 +186,10 @@ class ScriptObjects:
     {"SHOOT" : "{name1} shoots {name2} and they die. {name1}is glad they did it"},
     {"SIEZENOCARE" : "{name1} has a siezure and dies. No one is fazed. {name1} has no more dialogue"},
     #{"SIEZECARE" : "{} s has a siezure and dies. Everyone freaks out. {} only says ... now"},
-    {"SECRET": "{name1} immediately tells the most innapropriate secret. Add this the line before they say the secret"},
+    #{"SECRET": "{name1} immediately tells the most innapropriate secret. Add this the line before they say the secret"},
     #{"QUAKE" : "A earthquake happens, but only {} can notice"},
     #{"REPEAT" : "{} only repeats a single phrase"},
-    {"STROKE" : "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"},
+    #{"STROKE" : "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"},
     {"ALIEN" : "{name1} is abducted by aliens and is now gone"},
     {"CAR" : "{} is hit by a car and dies"},
     {"EXPLODE" : "{name1} randomly explodes and dies"}
@@ -314,7 +316,7 @@ class ScriptBuilder:
         self.donoManager.refreshDonations()
         self.currentDono = self.donoManager.getNextViableDonation();
 
-        return """Write me a 12 line dialouge for an adult cartoon. The characters are foul mouthed and R rated.
+        return """
         In this Scene """ + random.choice(self.scriptObjects.funny_topics).format(name1 = random.choice(self.charNames)) + """
         You can ONLY Use these characters : """ + self.getCharactersString() + """.
         You can ONLY Use these emotions : """ + ",".join(self.scriptObjects.emotions) + """.
@@ -322,15 +324,15 @@ class ScriptBuilder:
         Start every dialouge line with # . 
 
         Format it as such #[Character] (emotion): dialouge. Do not include scene directions.
-        
         """
 
     def getSystemPrompt(self):
         return """
-                Write some funny dialouge for characters similar to South Park.
-                The characters like to swear alot. They always say morally wrong things. 
-                Come up with a funny topic for our characters to talk about. 
-                        
+                Write a 12 line dialouge for R rated characters.
+                The characters are foul mouthed.
+                The characters like to swear alot. 
+                The characters are never offended or grossed out.
+                Write about whatever topic is supplied.
                 """
 
     def parse_string(self,text):
