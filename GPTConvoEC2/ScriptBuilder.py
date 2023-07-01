@@ -47,6 +47,7 @@ class ScriptObjects:
         "The characters try whippets",
         "{name1} talks about huffing paint",
         "{name1} joins the bloods",
+        "{name1} joins the crips",
         "{name1} gets pregnant",
         "{name1} randomly ejaculates",
         "{name1} gets diagnosed with terminal cancer",
@@ -188,7 +189,7 @@ class ScriptObjects:
     #{"REPEAT" : "{} only repeats a single phrase"},
     {"STROKE" : "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"},
     {"ALIEN" : "{name1} is abducted by aliens and is now gone"},
-    #{"CAR" : "{} is hit by a car and dies"},
+    {"CAR" : "{} is hit by a car and dies"},
     {"EXPLODE" : "{name1} randomly explodes and dies"}
     ]
 
@@ -313,7 +314,7 @@ class ScriptBuilder:
         self.donoManager.refreshDonations()
         self.currentDono = self.donoManager.getNextViableDonation();
 
-        return """Write me a 12-16 line dialouge for an adult cartoon. The characters are foul mouthed and always say morally wrong things.
+        return """Write me a 12 line dialouge for an adult cartoon. The characters are foul mouthed and R rated.
         In this Scene """ + random.choice(self.scriptObjects.funny_topics).format(name1 = random.choice(self.charNames)) + """
         You can ONLY Use these characters : """ + self.getCharactersString() + """.
         You can ONLY Use these emotions : """ + ",".join(self.scriptObjects.emotions) + """.
