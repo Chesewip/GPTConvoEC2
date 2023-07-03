@@ -6,6 +6,7 @@ import concurrent.futures
 from typing import List
 import time
 import subprocess
+import requests
 
 
 class VoiceGenerator:
@@ -46,15 +47,20 @@ class VoiceGenerator:
         self.use_original_latents_method_diffusion = False
         self.api = "/generate"
 
+    def is_gradio_alive(self):
+        try:
+            response = requests.get(self.url)
+            return response.status_code == 200
+        except:
+            return False
+
     def generateLines(self, lines, voice):
         for line in lines:
             self.generateLine(line, voice)
 
     def generateLine(self, text, voice):
 
-        #testing
-        response = self.client.get(self.url)
-        print(response)
+        print(self.is_gradio_alive())
 
         if voice == "Gabbi":
             self.seed = 1;
