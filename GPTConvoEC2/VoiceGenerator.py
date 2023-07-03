@@ -61,10 +61,9 @@ class VoiceGenerator:
 
     def generateLine(self, text, voice):
 
-        if self.is_gradio_alive():
-            print("GRADIO ALIVE")
-        else:
-            print("GRADIO DEAD")
+        if self.is_gradio_alive() == False:
+            self.launchNewVoiceCloner(self.port)
+            self.client = Client(self.url)
 
         if voice == "Gabbi":
             self.seed = 1;
