@@ -17,6 +17,7 @@ class VoiceGenerator:
 
         try:
             self.client = Client(self.url)
+            print("Server already active")
         except:
             self.launchNewVoiceCloner(port)
             self.client = Client(self.url)
@@ -60,7 +61,7 @@ class VoiceGenerator:
 
     def generateLine(self, text, voice):
 
-        print(self.is_gradio_alive())
+        print("GRADIO ALIVE :" + self.is_gradio_alive())
 
         if voice == "Gabbi":
             self.seed = 1;
