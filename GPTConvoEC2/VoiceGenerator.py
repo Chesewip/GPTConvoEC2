@@ -14,15 +14,9 @@ class VoiceGenerator:
     def __init__(self, port):
 
         self.url = "http://127.0.0.1:" + str(port)
-
-        try:
-            self.client = Client(self.url)
-            print("Server already active")
-        except:
-            self.launchNewVoiceCloner(port)
-            self.client = Client(self.url)
-
         self.port = port
+        self.launchNewVoiceCloner(port)
+
         self.input_prompt = ""
         self.line_delimiter = "\\n"
         self.emotion = None
@@ -107,11 +101,16 @@ class VoiceGenerator:
 
     def launchNewVoiceCloner(self, port):
         print("Starting New Voice Cloner")
-        command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
-        process = subprocess.Popen(command)
+        try:
+            self.client = Client(self.url)
+            print("Server already active")
+        except:
+            command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
+            process = subprocess.Popen(command)
     
-        # Give the process some time to start
-        time.sleep(50)
+            # Give the process some time to start
+            time.sleep(50)
+            self.client = Client(self.url)
 
 
 import threading
