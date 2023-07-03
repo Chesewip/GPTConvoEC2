@@ -7,6 +7,8 @@ from typing import List
 import time
 import subprocess
 import requests
+import os
+import signal
 
 
 class VoiceGenerator:
@@ -55,10 +57,6 @@ class VoiceGenerator:
 
     def generateLine(self, text, voice):
 
-        if self.is_gradio_alive() == False:
-            self.launchNewVoiceCloner(self.port)
-            self.client = Client(self.url)
-
         if voice == "Gabbi":
             self.seed = 1;
         else:
@@ -98,6 +96,8 @@ class VoiceGenerator:
         except:
             print("File Generated, return failed though?")
 
+    def killVoiceCloner(self):
+        os.kill(self.pid, signal.SIGTERM) 
 
     def launchNewVoiceCloner(self, port):
         print("Starting New Voice Cloner")
@@ -107,6 +107,7 @@ class VoiceGenerator:
         except:
             command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
             process = subprocess.Popen(command)
+            self.pid = process.pid
     
             # Give the process some time to start
             time.sleep(50)
@@ -130,7 +131,12 @@ class VoiceGeneratorWorker:
             line = self.queue.get()  # Blocks until a line is available
             if line is None:  # We send None to signal the worker to stop
                 break
-            self.voiceGen.generateLine(line.dialogue, line.character)
+            if self.voiceGen.is_gradio_alive():
+                self.voiceGen.generateLine(line.dialogue, line.character)
+            else:
+                self.voiceGen.killVoiceCloner()
+                oldPort = self.voiceGen.port
+                self.voiceGen = VoiceGenerator(oldPort)
 
     def run(self):
         self.thread = threading.Thread(target=self._run)
