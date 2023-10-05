@@ -8,7 +8,7 @@ class DonationManager:
         self.streamLabs = StreamlabsClient()
         self.donations = self.streamLabs.getDonations()
         self.minDonationAmount = 1.0
-        self.lastDonationFilePath = Path.home() / "Documents" / "GPT" / "LastDonation.txt"
+        self.lastDonationFilePath = Path.home() / "gptconvo" / "gptconvo" / "LastDonation.txt"
 
         # Load last donation id
         try:
