@@ -83,6 +83,7 @@ class GPTConvo:
             return response['choices'][0]['message']['content']
 
         except Exception as ex:
+            print(ex)
             self.callGPT(retries -1)
 
 
@@ -119,6 +120,7 @@ class GPTConvo:
                 return response['choices'][0]['message']['content']
 
             except Exception as ex:
+                print(ex)
                 self.callGPT(retries -1)
 
 

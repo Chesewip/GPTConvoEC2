@@ -48,6 +48,7 @@ from concurrent.futures import ThreadPoolExecutor
 def generate_scripts(queue):
     while True:
         try:
+            print("Generating Script")
             if (queue.qsize() > 2):
                 time.sleep(30)
             script = gptConvo.callGPTForOneOffScript()
@@ -56,6 +57,7 @@ def generate_scripts(queue):
             queue.put((parser.lines, unityScript))  # Add the lines and unityScript to the queue
             time.sleep(10)
         except Exception as ex:
+            print(ex)
             time.sleep(1)
 
 
