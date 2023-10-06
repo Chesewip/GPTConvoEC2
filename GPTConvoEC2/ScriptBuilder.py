@@ -144,7 +144,28 @@ class ScriptObjects:
         "{name1} says they haven't slept in 6 days",
         "{name1} starts taking steroids",
         "{name1} immediately tells the most innapropriate secret",
-        "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"
+        "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn",
+        "The characters launch a Kickstarter to fund their own country.",
+        "{name1} insists they can communicate with plants.",
+        "The characters try to make a viral challenge, but it goes horribly wrong.",
+        "{name1} starts speaking in tongues, claiming it's the language of the universe.",
+        "The characters are convinced the moon landing was faked and try to prove it.",
+        "{name1} wants to start a youtube prank channel but all their prank ideas are illegal",
+        "{name1} got probed by aliens last night",
+        "{name1} has a lisp",
+        "{name1} keeps asking you want sucky sucky?",
+        "{name1} keeps saying cringey things",
+        "{name1} wants to do whippets at the funeral later",
+        "The characters are roleplaying dungeon and dragons",
+        "The characters guess how many pounds they could lift with their dicks",
+        "{name1} insists to go by the name cachbar blumpkin now",
+        "{name1} just keeps screaming AAAAAAAAAA",
+        "{name1} wants to try the new crazy made up drug",
+        "{name1} wants the other characters to defecate on them",
+        "{name1} put boner pills in everyones drinks",
+        "{name1} asks for some coochie",
+        "{name1} speaks in jive",
+        "The characters talk about boofing"
     ]
 
     funny_topics_two = [
@@ -316,19 +337,19 @@ class ScriptBuilder:
         self.donoManager.refreshDonations()
         self.currentDono = self.donoManager.getNextViableDonation();
 
-        return """
-        In this Scene """ + random.choice(self.scriptObjects.funny_topics).format(name1 = random.choice(self.charNames)) + """
-        You can ONLY Use these characters : """ + self.getCharactersString() + """.
-        You can ONLY Use these emotions : """ + ",".join(self.scriptObjects.emotions) + """.
-        """+ self.rollForRandomEvent() + """. 
-        Start every dialouge line with # . 
+        return (
+            f"In this Scene {random.choice(self.scriptObjects.funny_topics).format(name1 = random.choice(self.charNames))}\n"
+            f"You can ONLY Use these characters : {self.getCharactersString()}.\n"
+            f"You can ONLY Use these emotions : {','.join(self.scriptObjects.emotions)}.\n"
+            f"{self.rollForRandomEvent()}.\n"
+            "Start every dialogue line with # .\n"
+            "Format it as such #[Character] (emotion): dialogue. Do not include scene directions.\n"
+        )
 
-        Format it as such #[Character] (emotion): dialouge. Do not include scene directions.
-        """
 
     def getSystemPrompt(self):
         return """
-                Write a 12 line dialouge for R rated characters.
+                Write a 8 line dialouge for R rated characters.
                 The characters are foul mouthed.
                 The characters like to swear alot. 
                 The characters are never offended or grossed out.

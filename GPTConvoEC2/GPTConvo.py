@@ -65,7 +65,7 @@ class GPTConvo:
 
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  # use your model
+                model="gpt-3.5-turbo-instruct-0914",  # use your model
                 messages=self.conversation_history
             )
             #self.conversation_history[1] = ({"role": "assistant", "content": response['choices'][0]['message']['content']})
