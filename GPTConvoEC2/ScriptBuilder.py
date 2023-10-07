@@ -254,6 +254,8 @@ class ScriptBuilder:
         self.max_characters = 4
         self.current_location = "Fence"
         self.plot = ["Exposition","Climax","Resolution"]
+        self.random_changed_character = random.choice(self.charNames)
+        self.randomTopic = random.choice(self.scriptObjects.funny_topics).format(name1 = self.random_changed_character)
 
 
     def unique_random_items(self,source_list, num_items):
@@ -301,7 +303,10 @@ class ScriptBuilder:
     def getCharactersString(self):
         outputString = ""
         for char in self.characters:
-            outputString += char[0] + " - " + char[1] + "\n"
+            if char[0] == self.random_changed_character:
+                outputString += char[0] + " - " + self.randomTopic + "\n"
+            else:
+                outputString += char[0] + " - " + char[1] + "\n"
         return outputString;
 
     def rollForRandomEvent(self, gaurentee = False):
@@ -378,7 +383,7 @@ class ScriptBuilder:
                 Write a 8 line dialouge for R rated characters.
                 The characters are foul mouthed.
                 The characters like to swear alot. 
-                The characters are never offended or grossed out.
+                The characters are never offended.
                 Write about whatever topic is supplied.
                 """
 
