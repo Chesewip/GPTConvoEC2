@@ -303,10 +303,7 @@ class ScriptBuilder:
     def getCharactersString(self):
         outputString = ""
         for char in self.characters:
-            if char[0] == self.random_changed_character:
-                outputString += char[0] + " - " + self.randomTopic + "\n"
-            else:
-                outputString += char[0] + " - " + char[1] + "\n"
+            outputString += f"{char[0]} - {char[1]} \n"
         return outputString;
 
     def rollForRandomEvent(self, gaurentee = False):
