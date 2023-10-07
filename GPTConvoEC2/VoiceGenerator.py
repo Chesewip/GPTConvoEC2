@@ -116,6 +116,7 @@ class VoiceGenerator:
             self.shell_pid = process.pid
             time.sleep(1)
             self.main_pid = self.get_child_pid(self.shell_pid)
+            print(self.main_pid)
 
             # Give the process some time to start
             time.sleep(50)
@@ -126,8 +127,9 @@ class VoiceGenerator:
         children = parent.children()
         for child in children:
             print(child.cmdline())
-            if "main.py" in child.cmdline():  # Check if main.py is part of the command line for the process
-                return child.pid
+            return  child.pid
+            #if "main.py" in child.cmdline():  # Check if main.py is part of the command line for the process
+             #   return child.pid
         print("Could not find PID of main.py")
         return None
 
