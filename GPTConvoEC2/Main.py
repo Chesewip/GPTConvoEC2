@@ -8,6 +8,7 @@ from StreamLabsClient import *
 import os
 import platform
 from pathlib import Path
+import signal
 
 
 localZipper = LocalFileZipper() 
@@ -38,7 +39,17 @@ voiceGens = [
 ]
 
 voiceDispatcher = VoiceGeneratorManager(voiceGens)
+kill_fuzzy_buddies = False
 
+def signal_handler(sig, frame):
+    global kill_fuzzy_buddies
+    print('Received shutdown signal. Closing Fuzzy Buddies...')
+    kill_fuzzy_buddies = True
+    for voice in voiceGens:
+        voice.killVoiceCloner();
+    exit(0)
+
+signal.signal(signal.SIGUSR1, signal_handler)
 
 #====================================================================
 
@@ -46,11 +57,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 
 def generate_scripts(queue):
-    while True:
+    while not kill_fuzzy_buddies:
         try:
             print("Generating Script")
             if (queue.qsize() > 2):
-                time.sleep(30)
+                time.sleep(1)
+                continue
             script = gptConvo.callGPTForOneOffScript()
             parser = ScriptParser(script, gptConvo.scriptBuilder.charNames)
             unityScript = parser.getUnityScript()
@@ -62,7 +74,7 @@ def generate_scripts(queue):
 
 
 def process_scripts(queue):
-    while True:
+    while not kill_fuzzy_buddies:
         if not queue.empty():
             lines, unityScript = queue.get()  # Get the lines and unityScript from the queue
             voiceDispatcher.run(lines)
