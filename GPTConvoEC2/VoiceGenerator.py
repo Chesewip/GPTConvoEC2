@@ -114,6 +114,7 @@ class VoiceGenerator:
             command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
             process = subprocess.Popen(command)
             self.shell_pid = process.pid
+            time.sleep(1)
             self.main_pid = self.get_child_pid(self.shell_pid)
 
             # Give the process some time to start
