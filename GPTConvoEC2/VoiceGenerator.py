@@ -9,6 +9,7 @@ import subprocess
 import requests
 import os
 import signal
+import psutil
 
 
 class VoiceGenerator:
@@ -97,7 +98,12 @@ class VoiceGenerator:
             print("File Generated, return failed though?")
 
     def killVoiceCloner(self):
-        os.kill(self.pid, signal.SIGTERM) 
+        try:
+            os.kill(self.main_pid, signal.SIGUSR1)
+            print(f"Voice Cloner on port {self.port} killed." )
+        except:
+            print("Couldn't kill voice cloner, consider shutting down EC2")
+        #os.kill(self.shell_pid, signal.SIGTERM) 
 
     def launchNewVoiceCloner(self, port):
         print("Starting New Voice Cloner")
@@ -107,11 +113,21 @@ class VoiceGenerator:
         except:
             command = ['bash', '-c', f'cd /home/ubuntu/gptconvo/ai-voice-cloning && ./start.sh --port {port}']
             process = subprocess.Popen(command)
-            self.pid = process.pid
-    
+            self.shell_pid = process.pid
+            self.main_pid = self.get_child_pid(self.shell_pid)
+
             # Give the process some time to start
             time.sleep(50)
             self.client = Client(self.url)
+
+    def get_child_pid(self, parent_pid):
+        parent = psutil.Process(parent_pid)
+        children = parent.children()
+        for child in children:
+            if "main.py" in child.cmdline():  # Check if main.py is part of the command line for the process
+                return child.pid
+        print("Could not find PID of main.py")
+        return None
 
 
 import threading

@@ -189,6 +189,9 @@ class ScriptObjects:
         "The characters are roleplaying a sexy scenario",
         "{name1} tells everyone they got hemorrhoids",
         "{name1} gets mad and threatens to throw them self in a wood chipper",
+        "{name1} asks the other characters to drain his balls",
+        "{name1} asks the other characters to milk him",
+        "{name1} to please kill him",
     ]
 
     funny_topics_two = [
