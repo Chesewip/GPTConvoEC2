@@ -69,9 +69,10 @@ def signal_handler(sig, frame):
     global kill_fuzzy_buddies
     print('Received shutdown signal. Closing Fuzzy Buddies...')
     kill_fuzzy_buddies = True
+    voiceDispatcher.disable_restart_for_all_workers();
     for voice in voiceGens:
         voice.killVoiceCloner();
-    exit(0)
+    #exit(0)  #Maybe turn this back on
 
 signal.signal(signal.SIGUSR1, signal_handler)
 

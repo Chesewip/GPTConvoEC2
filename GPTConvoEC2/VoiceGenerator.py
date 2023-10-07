@@ -142,6 +142,7 @@ class VoiceGeneratorWorker:
         self.voiceGen = voiceGen
         self.queue = queue.Queue()
         self.thread = None
+        self.should_restart = True
 
     def add_line(self, line):
         self.queue.put(line)
@@ -156,11 +157,18 @@ class VoiceGeneratorWorker:
             else:
                 self.voiceGen.killVoiceCloner()
                 oldPort = self.voiceGen.port
-                self.voiceGen = VoiceGenerator(oldPort)
+                if self.should_restart:
+                    self.voiceGen = VoiceGenerator(oldPort)
 
     def run(self):
         self.thread = threading.Thread(target=self._run)
         self.thread.start()
+
+    def disable_restart(self):  # Method to disable restarting
+        self.should_restart = False
+
+    def enable_restart(self):  # Method to enable restarting
+        self.should_restart = True
 
 
 class VoiceGeneratorManager:
@@ -199,6 +207,10 @@ class VoiceGeneratorManager:
 
     def run(self, dialogueLines):
         self.dispatchGenerators(dialogueLines)
+
+    def disable_restart_for_all_workers(self):
+        for worker in self.workers:
+            worker.disable_restart();
 
 
 
