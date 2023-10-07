@@ -3,6 +3,7 @@ import zipfile
 import shutil
 from datetime import datetime
 from collections import defaultdict
+import json
 
 class LocalFileZipper:
     def __init__(self):
