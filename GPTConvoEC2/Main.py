@@ -1,4 +1,7 @@
 
+from curses import meta
+from importlib import metadata
+from site import getsitepackages
 from GPTConvo import *
 from VoiceGenerator import *
 from ScriptParser import *
@@ -9,6 +12,7 @@ import os
 import platform
 from pathlib import Path
 import signal
+import json
 
 
 localZipper = LocalFileZipper() 
@@ -28,6 +32,26 @@ def get_api_key():
     elif platform.system() == 'Windows':
         return os.getenv("OPEN_AI_API_KEY")
 
+def get_episode_number():
+    file_path = "/home/ubuntu/gptconvo/gptconvo/episodeNumber.txt"
+    
+    # Ensure the directory exists, if not, create it
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    
+    # If the file does not exist, create it with the number '1'
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as file:
+            file.write('1')
+        return 1
+
+    # If the file exists, read the number, increment and write it back
+    with open(file_path, 'r') as file:
+        episode_number = int(file.readline().strip())
+
+    with open(file_path, 'w') as file:
+        file.write(str(episode_number + 1))
+    
+    return episode_number
 
 gptConvo = GPTConvo(get_api_key())
 localZipper.deleteResults();
@@ -64,10 +88,13 @@ def generate_scripts(queue):
                 continue
 
             print("Generating Script")
-            script = gptConvo.callGPTForOneOffScript()
+            script, dono = gptConvo.callGPTForOneOffScript()
             parser = ScriptParser(script, gptConvo.scriptBuilder.charNames)
             unityScript = parser.getUnityScript()
-            queue.put((parser.lines, unityScript))  # Add the lines and unityScript to the queue
+            metaData = {}
+            if dono is not None :
+                metaData['donation'] = dono.to_dict()
+            queue.put((parser.lines, unityScript, metaData))  # Add the lines and unityScript to the queue
             time.sleep(10)
         except Exception as ex:
             print(ex)
@@ -77,9 +104,13 @@ def generate_scripts(queue):
 def process_scripts(queue):
     while not kill_fuzzy_buddies:
         if not queue.empty():
-            lines, unityScript = queue.get()  # Get the lines and unityScript from the queue
+            lines, unityScript, metaData = queue.get()  # Get the lines and unityScript from the queue
             voiceDispatcher.run(lines)
-            localZipper.zipFiles('/home/ubuntu/gptconvo/ai-voice-cloning/results',unityScript, [line.character for line in lines])
+            metaData['epNumber'] = get_episode_number();
+            localZipper.zipFiles('/home/ubuntu/gptconvo/ai-voice-cloning/results',
+                                 unityScript, 
+                                 metaData, 
+                                 [line.character for line in lines])
         else:
             time.sleep(1)  # Wait for 1 second before checking the queue again
 

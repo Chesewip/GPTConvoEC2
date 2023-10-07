@@ -14,7 +14,7 @@ class LocalFileZipper:
             yield dirpath, dirnames, filenames
 
 
-    def zipFiles(self, localDir, unityScript, character_order, downloads_dir="/home/ubuntu/gptconvo/ScriptsDropoff/"):
+    def zipFiles(self, localDir, unityScript, metaData, character_order, downloads_dir="/home/ubuntu/gptconvo/ScriptsDropoff/"):
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         zip_file_name = 'script_' + timestamp + '.zip'
         zip_file_path = os.path.join(downloads_dir, zip_file_name)
@@ -34,8 +34,12 @@ class LocalFileZipper:
         with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zf:
             with open('script.txt', 'w') as temp_file:
                 temp_file.write(unityScript)
-
             zf.write('script.txt')
+
+            # Serialize metaData to JSON format, write to metadata.txt and add to the zip
+            with open('metadata.txt', 'w') as meta_file:
+                json.dump(metaData, meta_file, indent=4)
+            zf.write('metadata.txt')
 
             for i, character in enumerate(character_order):
                 if character_files[character]:
@@ -44,6 +48,7 @@ class LocalFileZipper:
                     zf.write(file_path, new_filename)
 
             os.remove('script.txt')
+            os.remove('metadata.txt')
 
         print(f'Files from {localDir} and script.txt have been zipped and saved to {zip_file_path}')
 

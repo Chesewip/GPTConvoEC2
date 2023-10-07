@@ -117,7 +117,7 @@ class GPTConvo:
                     "content": self.scriptBuilder.getSystemPrompt()         
                 }]
 
-                return response['choices'][0]['message']['content']
+                return response['choices'][0]['message']['content'], self.scriptBuilder.currentDono
 
             except Exception as ex:
                 print(ex)

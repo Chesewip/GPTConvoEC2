@@ -16,6 +16,15 @@ class Donation:
     def __str__(self):
         return f"Donation(id={self.id}, createTime={self.createTime}, amount={self.amount}, donatorName={self.donator}, message={self.message})"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "createTime": self.createTime,
+            "amount": self.amount,
+            "donatorName": self.donator,
+            "message": self.message
+        }
+
 class StreamlabsClient:
     def __init__(self):
         if platform.system() == 'Linux':

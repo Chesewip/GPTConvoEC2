@@ -311,7 +311,7 @@ class ScriptBuilder:
 
     def rollForRandomEvent(self, gaurentee = False):
         num = random.randrange(0,10)
-        if num >= 6 or self.currentDono is not None:
+        if num >= 5 or self.currentDono is not None:
             eventName, eventDescrip = list(random.choice(self.scriptObjects.randomEvents).items())[0]
 
             # find all unique placeholders like {nameN} using a regular expression
@@ -323,7 +323,7 @@ class ScriptBuilder:
             # create a dictionary with keys as 'name1', 'name2', ..., 'nameN' and values as chosen_names
             names_dict = {placeholder[1:-1]: name for placeholder, name in zip(unique_placeholders, chosen_names)}
             result = eventDescrip.format(**names_dict)
-            return "Add this on a new line in the middle of the script the line before it happens and follow what it says '[RANDOM EVENT= " + eventName +  " " + " ".join(chosen_names) + "]' "  + result
+            return "On a new line in the middle of the script, the line before it happens, Add this exact line and follow what it says.  '[RANDOM EVENT= " + eventName +  " " + " ".join(chosen_names) + "]' "  + result
         else:
             return ""
 
