@@ -59,10 +59,11 @@ from concurrent.futures import ThreadPoolExecutor
 def generate_scripts(queue):
     while not kill_fuzzy_buddies:
         try:
-            print("Generating Script")
             if (queue.qsize() > 2):
                 time.sleep(1)
                 continue
+
+            print("Generating Script")
             script = gptConvo.callGPTForOneOffScript()
             parser = ScriptParser(script, gptConvo.scriptBuilder.charNames)
             unityScript = parser.getUnityScript()

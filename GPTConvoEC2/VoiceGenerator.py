@@ -102,7 +102,7 @@ class VoiceGenerator:
             os.kill(self.main_pid, signal.SIGUSR1)
             print(f"Voice Cloner on port {self.port} killed." )
         except:
-            print("Couldn't kill voice cloner, consider shutting down EC2")
+            print("Couldn't kill voice cloner")
         #os.kill(self.shell_pid, signal.SIGTERM) 
 
     def launchNewVoiceCloner(self, port):
@@ -124,6 +124,7 @@ class VoiceGenerator:
         parent = psutil.Process(parent_pid)
         children = parent.children()
         for child in children:
+            print(child.cmdline())
             if "main.py" in child.cmdline():  # Check if main.py is part of the command line for the process
                 return child.pid
         print("Could not find PID of main.py")
