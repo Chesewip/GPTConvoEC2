@@ -242,6 +242,18 @@ class ScriptObjects:
     {"EXPLODE" : "{name1} randomly explodes and dies"}
     ]
 
+    randomPersonalities = [
+        "A character that only speaks chinese that no one else can understand",
+        "A character that only speaks russian that no one else can understand",
+        "A character that just yells AAAAAAA",
+        "A character that only screams all their lines",
+        "A character that only repeats a random date 3 times in a row",
+        "A character that breaks the 4th wall and tries to warn the viewers",
+        "A character that BEGS for coochie",
+        "A character that repeats a CIA operation name",
+        "A character that keeps asking if they can oil down the other characters",
+        ]
+
 
 
 class ScriptBuilder:
@@ -302,8 +314,12 @@ class ScriptBuilder:
 
     def getCharactersString(self):
         outputString = ""
+        random_override = random.randrange(0, 20)
         for char in self.characters:
-            outputString += f"{char[0]} - {char[1]} \n"
+            if (char[0] == self.random_changed_character and random_override >= 0):
+                outputString += f"{char[0]} - {random.choice(self.scriptObjects.randomPersonalities)} \n"
+            else:
+                outputString += f"{char[0]} - {char[1]} \n"
         return outputString;
 
     def rollForRandomEvent(self, gaurentee = False):
