@@ -186,12 +186,19 @@ class ScriptObjects:
         "{name1} says they took 100 percocets a couple minutes ago",
         "{name1} admits they like drinking toilet water",
         "The characters are giving advice on how to pick up the ladies",
-        "The characters are roleplaying a sexy scenario",
+        "The characters are roleplaying how they will kill {name1}",
         "{name1} tells everyone they got hemorrhoids",
         "{name1} gets mad and threatens to throw them self in a wood chipper",
         "{name1} asks the other characters to drain his balls",
         "{name1} asks the other characters to milk him",
         "{name1} asks the others to please kill him",
+        "{name1} believes the earth is flat",
+        "{name1} tries to eat a nuclear bomb",
+        "{name1} ate their own sperm because they were hungry",
+        "{name1} has something weird stuck inside them",
+        "{name1} has a weird reason for being mad",
+        "{name1} is being hunted by the FBI",
+        "{name1} gave crack to their grandma"
     ]
 
     funny_topics_two = [
@@ -245,13 +252,13 @@ class ScriptObjects:
     randomPersonalities = [
         "A character that only speaks chinese that no one else can understand",
         "A character that only speaks russian that no one else can understand",
-        "A character that just yells AAAAAAA",
-        "A character that only screams all their lines",
+        "A character that only talks in ALL CAPS",
         "A character that only repeats a random date 3 times in a row",
-        "A character that breaks the 4th wall and tries to warn the viewers",
         "A character that BEGS for coochie",
-        "A character that repeats a CIA operation name",
         "A character that keeps asking if they can oil down the other characters",
+        "A character who smokes crack",
+        "A character who threatens the other characters in odd ways",
+        "A character who roasts the other characters in clever ways",
         ]
 
 
@@ -316,7 +323,7 @@ class ScriptBuilder:
         outputString = ""
         random_override = random.randrange(0, 20)
         for char in self.characters:
-            if (char[0] == self.random_changed_character and random_override >= 0):
+            if (char[0] == self.random_changed_character and random_override >= 10):
                 outputString += f"{char[0]} - {random.choice(self.scriptObjects.randomPersonalities)} \n"
             else:
                 outputString += f"{char[0]} - {char[1]} \n"
