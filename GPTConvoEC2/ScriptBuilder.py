@@ -198,7 +198,13 @@ class ScriptObjects:
         "{name1} has something weird stuck inside them",
         "{name1} has a weird reason for being mad",
         "{name1} is being hunted by the FBI",
-        "{name1} gave crack to their grandma"
+        "{name1} gave crack to their grandma",
+        "The characters only say 'Yup'",
+        "The characters are having a 'yo mama' battle",
+        "The characters are roleplaying cowboys",
+        "{name1} found a baby in a dumpster",
+        "{name1} lost their baby",
+        "{name1} says they spent 10,000 dollars on fortnite skins",
     ]
 
     funny_topics_two = [
@@ -244,7 +250,7 @@ class ScriptObjects:
     #{"QUAKE" : "A earthquake happens, but only {} can notice"},
     #{"REPEAT" : "{} only repeats a single phrase"},
     #{"STROKE" : "{name1} has a stroke and all their dialouge becomes nnnnnnnnnnnnnnnnnnnnnnnn"},
-    {"ALIEN" : "{name1} is abducted by aliens and is now gone"},
+    {"ALIEN" : "{name1} is randomly vaporized by a ufo. No one cares."},
     {"CAR" : "{name1} is hit by a car and dies"},
     {"EXPLODE" : "{name1} randomly explodes and dies"}
     ]
@@ -259,6 +265,7 @@ class ScriptObjects:
         "A character who smokes crack",
         "A character who threatens the other characters in odd ways",
         "A character who roasts the other characters in clever ways",
+        "A character who just says 'IM GOING TO KILL YOU' to the other characters",
         ]
 
 
