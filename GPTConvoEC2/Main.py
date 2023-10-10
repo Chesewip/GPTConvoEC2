@@ -53,16 +53,6 @@ def get_episode_number():
     
     return episode_number
 
-gptConvo = GPTConvo(get_api_key())
-localZipper.deleteResults();
-
-voiceGens = [
-    VoiceGenerator(8000),
-    VoiceGenerator(8001)
-    # Add more voice generators if needed
-]
-
-voiceDispatcher = VoiceGeneratorManager(voiceGens)
 kill_fuzzy_buddies = False
 
 def signal_handler(sig, frame):
@@ -75,6 +65,20 @@ def signal_handler(sig, frame):
     exit(0)  #Maybe turn this back on
 
 signal.signal(signal.SIGUSR1, signal_handler)
+
+gptConvo = GPTConvo(get_api_key())
+localZipper.deleteResults();
+
+voiceGens = [
+    VoiceGenerator(8000),
+    VoiceGenerator(8001)
+    # Add more voice generators if needed
+]
+
+voiceDispatcher = VoiceGeneratorManager(voiceGens)
+
+
+
 
 #====================================================================
 
