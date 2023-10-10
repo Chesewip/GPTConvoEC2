@@ -44,6 +44,7 @@ class VoiceGenerator:
         self.use_original_latents_method_ar = False
         self.use_original_latents_method_diffusion = False
         self.api = "/generate"
+        print(" NEW VOICE GENERATOR CREATED ")
 
     def is_gradio_alive(self):
         try:
@@ -160,6 +161,8 @@ class VoiceGeneratorWorker:
                 if self.should_restart:
                     print( "-- VOICE CLONER TRYING TO AUTO RESTART --") 
                     self.voiceGen = VoiceGenerator(oldPort)
+                else:
+                    break;
 
     def run(self):
         self.thread = threading.Thread(target=self._run)
