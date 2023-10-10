@@ -64,7 +64,7 @@ def signal_handler(sig, frame):
     voiceDispatcher.disable_restart_for_all_workers();
     for voice in voiceGens:
         voice.killVoiceCloner();
-    exit(0)  #Maybe turn this back on
+    #exit(0)  #Maybe turn this back on
 
 signal.signal(signal.SIGUSR1, signal_handler)
 
