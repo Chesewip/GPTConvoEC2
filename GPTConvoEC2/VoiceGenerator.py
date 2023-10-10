@@ -158,6 +158,7 @@ class VoiceGeneratorWorker:
                 self.voiceGen.killVoiceCloner()
                 oldPort = self.voiceGen.port
                 if self.should_restart:
+                    print( "-- VOICE CLONER TRYING TO AUTO RESTART --") 
                     self.voiceGen = VoiceGenerator(oldPort)
 
     def run(self):
@@ -209,6 +210,7 @@ class VoiceGeneratorManager:
         self.dispatchGenerators(dialogueLines)
 
     def disable_restart_for_all_workers(self):
+        print( " --- RESTART DISABLED FOR VOICE CLONERS ---" )
         for worker in self.workers:
             worker.disable_restart();
 
