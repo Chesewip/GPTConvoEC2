@@ -16,6 +16,8 @@ import json
 
 
 localZipper = LocalFileZipper() 
+default_ports = [8000, 8001]
+ports = [int(port) for port in sys.argv[1:3]] if len(sys.argv) >= 3 else default_ports
 
 def load_api_key(file_path):
     if not os.path.exists(file_path):
@@ -69,11 +71,7 @@ signal.signal(signal.SIGUSR1, signal_handler)
 gptConvo = GPTConvo(get_api_key())
 localZipper.deleteResults();
 
-voiceGens = [
-    VoiceGenerator(8000),
-    VoiceGenerator(8001)
-    # Add more voice generators if needed
-]
+voiceGens = [VoiceGenerator(port) for port in ports]
 
 voiceDispatcher = VoiceGeneratorManager(voiceGens)
 
